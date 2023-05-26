@@ -23,15 +23,15 @@ public class Purchase {
     @GeneratedValue
     private Long id;
     private Date dateOfPurchase;
-    @Transient
-    private Customer customer;
-    @Transient
-    private List<Item> itemsList;
+    //@Transient
+    private Long customerId;
+    //@Transient
+    private Long itemsId;
 
 
-    public Purchase(Date dateOfPurchase, Customer customer, List<Item> itemsList) {
+    public Purchase(Date dateOfPurchase, Long customerId, Long itemsId) {
         this.dateOfPurchase = dateOfPurchase;
-        this.customer = customer;
-        this.itemsList=itemsList;
+        this.customerId = customerId;
+        this.itemsId=itemsId;
     }
 }

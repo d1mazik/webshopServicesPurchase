@@ -48,18 +48,16 @@ public class PurchaseController {
 
     @PostMapping("/newbypost/{customerid}/{itemid}")
     public String newPurchaseByPost(@PathVariable Long customerid,@PathVariable Long itemid ){
-        //Customer customer=customerRepo.findById(customerid).get();
-        String CostumerServiceUr1="http://localhost:8080/customers/"+customerid;
+        String CostumerServiceUr1="http://localhost:8081/customers/"+customerid;
         Customer customer=restTemplate.getForObject(CostumerServiceUr1, Customer.class);
 
         Date currentDate=new Date(System.currentTimeMillis());
 
-        String itemServiceUr1="http://localhost:8080/items/"+itemid;
+        String itemServiceUr1="http://localhost:8082/items/"+itemid;
         Item item=restTemplate.getForObject(itemServiceUr1, Item.class);
-        List<Item> itemsList=new ArrayList<>();
-        itemsList.add(item);
-
-        Purchase purchase=new Purchase(currentDate,customer,itemsList);
+        //CUSTOMER ID INSTEAD , ITEM ID TOO
+        //ITS OKAY IN GET THIS WAY
+        Purchase purchase=new Purchase(currentDate,customer.getId(),item.getId());
         purchaseRepo.save(purchase);
         return "The purchase was added to database";
     }
@@ -76,10 +74,11 @@ public class PurchaseController {
         purchaseRepo.save(purchase);
         return "The purchase was added to database";
     }*/
+    /*
     @RequestMapping("/moreitems/{purchaseid}/{newitemsid}")
     public String addMoreItemsToPurchase(@PathVariable Long purchaseid,@PathVariable Long newitemsid){
         Purchase existingPurchase=purchaseRepo.findById(purchaseid).get();
-        String itemServiceUr1="http://localhost:8080/items/"+newitemsid;
+        String itemServiceUr1="http://localhost:8082/items/"+newitemsid;
         Item newitem=restTemplate.getForObject(itemServiceUr1, Item.class);
         List<Item> itemList=existingPurchase.getItemsList();
         itemList.add(newitem);
@@ -89,7 +88,7 @@ public class PurchaseController {
         }
         return "The "+newitem.getName()+" was added to the existing purchase";
     }
-    /*@RequestMapping("/forcustomer/{customerid}")
+    @RequestMapping("/forcustomer/{customerid}")
     public List<Purchase> customerPurchases(@PathVariable Long customerid){
         String customerur1="http://localhost:8080/customers/"+customerid;
         Customer customer=restTemplate.getForObject(customerur1, Customer.class);
