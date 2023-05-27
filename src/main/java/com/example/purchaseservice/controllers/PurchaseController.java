@@ -56,7 +56,6 @@ public class PurchaseController {
         String itemServiceUr1="http://localhost:8082/items/"+itemid;
         Item item=restTemplate.getForObject(itemServiceUr1, Item.class);
         //CUSTOMER ID INSTEAD , ITEM ID TOO
-        //ITS OKAY IN GET THIS WAY
         Purchase purchase=new Purchase(currentDate,customer.getId(),item.getId());
         purchaseRepo.save(purchase);
         return "The purchase was added to database";
